@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace platform {
+namespace EGA {
 
 TileSet::TileSet( Screen& s) : m_screen(s) {
   m_surface = NULL;

@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace platform {
+namespace EGA {
 
 class Screen;
 
@@ -13,7 +13,6 @@ public:
 private:
 
   char_row_t * m_bit_field;
-
   
 public:
   Font();
@@ -21,7 +20,6 @@ public:
 
   bool load( int, int, char_row_t* );
 
-  void putchar( int, int, int, int );
   void puts( Screen*, int, int, int, int, char* );
 };
 

@@ -5,7 +5,7 @@
 
 #include "screen.hh"
 
-namespace platform {
+namespace EGA {
 
 class TileSet {
 private:

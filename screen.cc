@@ -4,10 +4,12 @@
 #include <cstring>
 
 #include "screen.hh"
+#include "font.hh"
+#include "ega-font-bytes.h"
 
 using namespace std;
 
-namespace platform {
+namespace EGA {
   
 SDL_Color Screen::s_palette[] = {
   {   0,   0,   0 },
@@ -34,6 +36,8 @@ Screen::Screen() {
   m_screen     = NULL;
   m_is_running = true;
   m_keys       = NULL;
+
+  m_font.load( 32, 96, ega_font_bytes );
 }
 
 Screen::~Screen() { 
@@ -116,8 +120,12 @@ string Screen::error_message() {
   return string(SDL_GetError());
 }
 
-void Screen::puts( int x, int y, int c, char *s ) {
-  
+void Screen::puts( int x, int y, int c, char *s ) { 
+  m_font.puts( this, x, y, c, strlen(s), s );
+}
+
+EGA::Font& Screen::font() {
+  return m_font;
 }
 
 void Screen::scale_flip() {

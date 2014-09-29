@@ -4,13 +4,14 @@
 #include <SDL/SDL.h>
 #include <string>
 
-namespace platform {
+#include "font.hh"
+
+namespace EGA {
   
 class Screen {
 public:
 
   typedef unsigned char pixel_t;
-
 
 private:
 
@@ -19,6 +20,7 @@ private:
   SDL_Surface *m_screen;
   bool         m_is_running;
   pixel_t     *m_pixels;
+  Font         m_font;
   
 
   void scale_flip();
@@ -47,6 +49,8 @@ public:
   void tick();
   void puts( int, int, int, char* );
   void pset( int, int, int );
+
+  Font& font();
 
   pixel_t *pixels();
 

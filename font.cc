@@ -4,7 +4,7 @@
 #include "font.hh"
 #include "screen.hh"
 
-namespace platform {
+namespace EGA {
 
   /* this is a bit memory inefficient */
 
@@ -27,17 +27,10 @@ bool Font::load( int start, int count, char_row_t *bytes ) {
   return true; 
 }
 
-void Font::putchar( int x, int y, int c, int h ) {
-
-  
-
-
-}
-
 void Font::puts( Screen *screen, int x, int y, int c, int l, char *t ) {
 
   int dw; // draw width
-  int dh; // draw height;
+  int dh; // draw height
   int xo; // x offset of char
   int yo; // y offset of char
   int w;  // width counter
