@@ -1,0 +1,110 @@
+
+#include <iostream>
+#include <cstdlib>
+
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+
+/* not sure what this is supposed to be... */
+
+using namespace std;
+
+static SDL_Surface *screen  = NULL;
+static SDL_Surface *sprites = NULL;
+static bool run_loop        = true;
+static int *key_state       = NULL;
+
+static SDL_Color palette[] = {
+  {   0,   0,   0 },
+  {   0,   0, 127 },
+  {   0, 127,   0 },
+  {   0, 127, 127 },
+  { 127,   0,   0 },
+  { 127,   0, 127 },
+  { 127, 127,   0 },
+  { 127, 127, 127 },
+  {  64,  64,  64 },
+  {  64,  64, 255 },
+  {  64, 255,  64 },
+  {  64, 255, 255 },
+  { 255,  64,  64 },
+  { 255,  64, 255 },
+  { 255, 255,  64 },
+  { 255, 255, 255 } 
+};
+
+static void cleanup() {
+  if(screen) SDL_Quit();
+}
+
+void scale_blit() {
+}
+
+void draw_sprite( int x, int y, int n ) {
+
+  SDL_Rect dst = { x, y, 0, 0 };
+  SDL_Rect src = { n * 19, 0, 19, 22 };
+
+  SDL_BlitSurface( sprites, &src, screen, &dst ); 
+}
+
+int main( int argc, char** argv ) {
+
+  unsigned short anim_count = 0;
+  SDL_Event event;
+
+  atexit( cleanup );
+
+  screen = SDL_SetVideoMode(640, 480, 8, SDL_SWSURFACE); 
+  if( !screen ) {
+    cerr << "Boobs! failed to init video" << endl;
+    return -1; 
+  }
+
+  sprites = IMG_Load( "data/char-test.png" );
+  if( !sprites ) {
+    cerr << "Boobs! failed to load sprites" << endl;
+    return -1; 
+  }
+  
+  SDL_SetColorKey(sprites, SDL_SRCCOLORKEY, 255);
+
+  key_state = new int[SDLK_LAST];
+
+  SDL_SetPalette( screen, SDL_LOGPAL, palette, 0, 16 );
+
+  while(run_loop) {
+
+    while( SDL_PollEvent(&event) ) {
+
+      switch( event.type ) {
+
+        case SDL_QUIT:
+          run_loop = false;
+          break;
+
+        case SDL_KEYDOWN:
+          key_state[(int)event.key.keysym.sym] = 1;
+          break;
+
+
+        case SDL_KEYUP:
+          key_state[(int)event.key.keysym.sym] = 0;
+          break;
+      } 
+    }
+
+    SDL_FillRect( screen, NULL, 4 );
+
+    draw_sprite( 10, 10, (anim_count >> 1) & 7 );
+
+    SDL_Flip(screen);
+    SDL_Delay( 20 ); 
+
+    anim_count++;
+  }
+
+
+  return 0;
+}
+
