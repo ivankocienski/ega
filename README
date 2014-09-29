@@ -1,0 +1,10 @@
+EGA Graphics emulator
+=====================
+
+16 colors, 320x200 resolution graphics. Double buffered. Has fonts.
+
+Has a relatively clean C++ interface. See main.cc for a demo.
+
+Needs SDL 1.2 for framebuffer twiddling (SDL 2 isn't really geared to framebuffer hacking :[ )
+
+-ivan k.
